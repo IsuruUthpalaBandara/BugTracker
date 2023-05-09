@@ -1,0 +1,43 @@
+
+
+.navbar{
+    background-color: black;
+    padding:2px;
+    position:relative;
+    height: 10%;
+    width:100%;
+}
+
+.navbtn{
+   
+    color:rgb(36, 182, 36);
+    background-color: black;
+    font-size: 15px;
+    margin-left:20px;
+    border-radius: 10px;
+    border:none;
+    padding:10px;
+
+
+}
+
+.navbtn:hover{
+    color:white;
+
+}
+
+.navlist{
+    display:inline;
+    
+
+}
+
+.appTitle{
+
+    color:white;
+    font-size: 30px;
+    margin-right:500px;
+
+}
+
+
