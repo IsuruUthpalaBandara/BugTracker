@@ -1,87 +1,99 @@
-import {  Button, Table , Input, Form ,Drawer, DatePicker, Checkbox} from 'antd';
+import {  Button,
+           Table , 
+           Input,
+           Form ,
+           Drawer, 
+           DatePicker,  
+           Radio, 
+           Tag,
+           Typography,
+           Space,
+           Progress
+              } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import Axios from 'axios'
 import React,{ useEffect, useState} from 'react'
 
 
 
-const columns = [
-  {
-    title: 'bugNo',
-    dataIndex: 'bugNo',
-    key: 'bugNo',
-    
-  },
-  {
-    title: 'bugName',
-    dataIndex: 'bugName',
-    key: 'bugName',
-  },
-  {
-    title: 'Description',
-    dataIndex: 'Description',
-    key: 'Description',
-  },
 
-  {
-    title: 'Status',
-    key: 'Status',
-    dataIndex: 'Status',
-   
-  },
-  {
-    title: 'Fixing Date',
-    key: 'dueDate',
-    dataIndex:'dueDate',
-  },
-  {
-    title: 'Time Left',
-    key: 'timeLeft',
-    dataIndex:'timeLeft',
-  },
-  {
-    title: 'Fixing Method',
-    dataIndex: 'fixingMethod',
-    key: 'fixingMethod',
-  },
-  {
-    title: 'Responsibility',
-    dataIndex: 'Responsibility',
-    key: 'Responsibility',
-  },
-];
-
-
-
+const {Text}=Typography
 
 
 
 const Project = () => {
 
-
-
-  ////LOACL STORAGE////
-
   
-
-  /////////////////////
 
   const [currentProject,setCurrentProject]=useState({})
   const [openAddBug,setOpenAddBug]=useState(false)
+  const [openEditBug,setOpenEditBug]=useState(false)
+
+
   const [bugNo,setBugNo]=useState(0)
   const [bugForm,setBugForm]=useState([])
+
+  const [editBugNo,setEditBugNo]=useState('')
+
+  const [currentProgress,setCurrentProgress]=useState(0)
+
+  
+
+  const [form]=Form.useForm()
+
+ // useEffect(()=>{
+   // const bugTotal=currentProject.bugReport.length
+    //console.length("bugTotal=>",bugTotal)
+
+   
+
+   
+    
+  //})
 
  
   const addBug=()=>{setOpenAddBug(true)}
   const onClose=()=>{setOpenAddBug(false)}
 
+  const openEdit=(values)=>{
+    
+    console.log("bugEdit details=>", values)
+    setOpenEditBug(true)
+
+    setEditBugNo(values.bugNo)
+
+    form.setFieldsValue({
+      bugNo:values.bugNo,
+      bugName:values.bugName,
+      Status:values.Status,
+      Description:values.Description,
+      Responsibility:values.Responsibility,
+      startTime:values.startTime,
+      finishTime:values.finishTime,
+      fixingMethod:values.fixingMethod
+      
+    })
+
+    setEditBugNo(values.bugNo)
+  
+  
+  }
+
+
+  const onCloseEditBug=()=>{setOpenEditBug(false)}
+
+
+
+
+
    const LoadProject=(values)=>{
 
-  
+
     
     setCurrentProject(JSON.parse(localStorage.getItem(values.projectName)))
     console.log(currentProject)
-  
+    
+    
     
     /*Axios.post('http://localhost:3001/api/projects',{
       projectName:values.projectName    
@@ -115,8 +127,109 @@ const Project = () => {
     setBugNo(bugNo+1)
     setCurrentProject(currentProject)
     localStorage.setItem(currentProject.projectName,JSON.stringify(currentProject))
+   
     
    }
+
+   const editBug=(values)=>{
+
+    
+    bugForm[values.bugNo-1]=values
+    console.log("bugForm after=>",bugForm)
+    currentProject.bugReport=bugForm
+    setCurrentProject(currentProject)
+    localStorage.setItem(currentProject.projectName,JSON.stringify(currentProject))
+
+
+    var bugTotal=currentProject.bugReport.length
+    console.log("bugTotal=>",bugTotal)
+   
+    var i
+    var fixedBugTotal=0
+
+    for(i=0;i<bugTotal;i++){
+      if(currentProject.bugReport[i].Status==="Fixed"){
+        fixedBugTotal++
+        
+      }
+
+    }
+
+    console.log("fixedBugTotal=>",fixedBugTotal)
+    setCurrentProgress(fixedBugTotal/bugTotal*100)
+    console.log("currentProgress=>",currentProgress)
+    
+
+   }
+
+
+
+
+
+
+
+   const columns = [
+    {
+      title: 'bugNo',
+      dataIndex: 'bugNo',
+      key: 'bugNo',
+      render:(text,record,index)=>{
+        return(
+          <Button onClick={(e)=>openEdit(record)}>{text}</Button>
+        )
+        
+      }
+  
+
+       
+      
+    },
+    
+    {
+      title: 'bugName',
+      dataIndex: 'bugName',
+      key: 'bugName',
+    },
+    {
+      title: 'Description',
+      dataIndex: 'Description',
+      key: 'Description',
+    },
+  
+    {
+      title: 'Status',
+      key: 'Status',
+      dataIndex: 'Status',
+     
+    },
+    {
+      title: 'Start Time',
+      key: 'startTime',
+      dataIndex:'startTime',
+    },
+    {
+      title: 'Finish Time',
+      key: 'finishTime',
+      dataIndex:'finishTime',
+    },
+    
+    {
+      title: 'Fixing Method',
+      dataIndex: 'fixingMethod',
+      key: 'fixingMethod',
+    },
+    {
+      title: 'Responsibility',
+      dataIndex: 'Responsibility',
+      key: 'Responsibility',
+    },
+  ];
+ 
+
+
+
+
+
 
  return(
   <>
@@ -213,22 +326,35 @@ style={{width:300}}
           
                     label="Status: "
                     name="Status"
-                    valuePropName='checked'
+                   
                     
                     
                     >
+                      <Radio.Group >
+                        <Radio value="Fixed">Fixed</Radio>
+                        <Radio value="Not Fixed">Not Fixed</Radio>
+                      </Radio.Group>
 
-          
-               <Checkbox>Fixed</Checkbox>
+       
           </Form.Item>
 
           <Form.Item
           style={{width:300}}
-          label="Due Date: "
-          name="dueDate"
+          label="Start Time: "
+          name="startTime"
 
           >
-            <DatePicker/>
+            <DatePicker picker='date' />
+
+          </Form.Item>
+
+                    <Form.Item
+          style={{width:300}}
+          label="Finish Time: "
+          name="finishTime"
+
+          >
+            <DatePicker picker='date'/>
 
           </Form.Item>
 
@@ -268,7 +394,156 @@ style={{width:300}}
 
     </Form.Item>
 
+   
+<Form.Item style={{width:300, marginLeft:30}}>
+<Progress  percent={currentProgress} />
+</Form.Item>
+     
+       
 
+     
+
+
+    <div>
+
+       
+          
+        
+            <Form>
+            <Drawer title="Edit Bug" placement="right" onClose={onCloseEditBug} open={openEditBug}>
+      
+              <Form onFinish={editBug} form={form}>
+
+                
+                <Form.Item
+                
+                style={{width:300}}
+                label="Bug No:"
+                name="bugNo"
+                rules={[
+                  {
+                    required: false,
+                    message: 'Enter bug No',
+                  },
+                      ]}
+                          >
+
+
+               <Text>{editBugNo}</Text>
+                
+      
+                </Form.Item>
+
+                
+
+               <Form.Item
+                style={{width:300}}
+                label="Bug Name : "
+                name="bugName"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Enter bug name',
+                  },
+                      ]}
+                          >
+                <Input />
+                
+      
+                </Form.Item>
+      
+                <Form.Item
+                style={{width:300}}
+                label="Description : "
+                name="Description"
+                rules={[
+                  {
+                    required: false,
+                    message: 'Bug Description Here',
+                  },
+                      ]}
+                          >
+                <TextArea rows={4} />
+                
+      
+                </Form.Item>
+      
+                <Form.Item
+                
+                          label="Status: "
+                          name="Status"
+                         
+                          
+                          
+                          >
+                            <Radio.Group >
+                              <Radio value="Fixed">Fixed</Radio>
+                              <Radio value="Not Fixed">Not Fixed</Radio>
+                            </Radio.Group>
+      
+             
+                </Form.Item>
+      
+                <Form.Item
+                style={{width:300}}
+                label="Start Time: "
+                name="startTime"
+      
+                >
+                  <DatePicker picker='date' />
+      
+                </Form.Item>
+      
+                          <Form.Item
+                style={{width:300}}
+                label="Finish Time: "
+                name="finishTime"
+      
+                >
+                  <DatePicker picker='date'/>
+      
+                </Form.Item>
+      
+                <Form.Item
+                style={{width:300}}
+                label="Fixing Method : "
+                name="fixingMethod"
+                
+                rules={[
+                  {
+                    required: false,
+                    message: 'Add how to fix this',
+                  },
+                      ]}
+                          >
+                <TextArea rows={4} />
+                
+      
+                </Form.Item>
+      
+                <Form.Item
+                  label="Responsibility : "
+                 name="Responsibility"
+                  >
+                   <Input/>
+      
+                   </Form.Item>
+      
+                   <Form.Item>
+                    <Button htmlType="submit">Save</Button>
+                   </Form.Item>
+      
+      
+              </Form>
+      
+            </Drawer>
+      
+      </Form>
+      
+         
+        
+ 
+     </div>
 
 
     </div>
