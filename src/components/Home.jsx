@@ -1,6 +1,7 @@
 import { Button, Layout, List, Space } from 'antd';
 import { useNavigate,Outlet } from 'react-router-dom';
 import './Home.css'
+import Login from './Login';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -71,7 +72,7 @@ export default function Home (){
             <Button  style={btnStyle}   onClick={()=>navigate('signin')}>Sign In</Button>
           </List.Item>
           <List.Item>
-            <Button style={btnStyle}  onClick={()=>navigate('project')}>Open Project</Button>
+            <Button style={btnStyle}  onClick={()=>navigate('openproject')}>Open Project</Button>
           </List.Item>
           <List.Item>
             <Button style={btnStyle}   onClick={()=>navigate('createProject')}>Create Project</Button>

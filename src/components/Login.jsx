@@ -19,7 +19,7 @@ const Login = () => {
       userPassword:values.userPassword
     }).then((res)=>{
       console.log('login res=>',res)
-      navigate('/')
+      navigate('../openproject')
       alert('now you can start bug tracking work')
     })
     .catch((err)=>{

@@ -11,9 +11,9 @@ const Signin = () => {
     //console.log('Success:', values);
 
     Axios.post('http://localhost:3001/api/signin',{
-      userName:values.userName.data,
-      userEmail:values.userEmail.data,
-      userPassword:values.userPassword.data
+      userName:values.userName,
+      userEmail:values.userEmail,
+      userPassword:values.userPassword
     }).then((res)=>{
       console.log('signin res=>',res)
       navigate('/')

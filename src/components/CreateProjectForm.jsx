@@ -10,17 +10,22 @@ export default function CreateProjectForm() {
     
     const project=values
 
-    project.bugReport=[]
+    ////////////API REQUEST/////////// 
+
+    Axios.post("http://localhost:3001/api/createproject",{
+
+      projectName:project.projectName,
+      projectCreator:project.projectCreator,
+      projectPassword:project.projectPassword
+
+    }).then((res)=>{
+      console.log("project creation response=>",res)
+      console.log("project created!!!")
+    }).catch((err)=>{
+      console.log("project creation error=>",err)
+    })
 
 
-    ///////LOCAL STORAGE///////
-    
-    localStorage.setItem(values.projectName,JSON.stringify(project))
-
-    console.log("created =>",project.projectName)
-    
-    
-    ////////////
 
 
   
@@ -75,6 +80,19 @@ export default function CreateProjectForm() {
       ]}
     >
       <Input />
+    </Form.Item>
+
+    <Form.Item
+      label="Project Password :"
+      name="projectPassword"
+      rules={[
+        {
+          required: true,
+          message: 'Please set a password for your project',
+        },
+      ]}
+    >
+      <Input.Password />
     </Form.Item>
 
     

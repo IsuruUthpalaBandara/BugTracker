@@ -5,9 +5,7 @@ import {  Button,
            Drawer, 
            DatePicker,  
            Radio, 
-           Tag,
            Typography,
-           Space,
            Progress
               } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
@@ -17,11 +15,15 @@ import React,{ useEffect, useState} from 'react'
 
 
 
+
 const {Text}=Typography
 
 
 
 const Project = () => {
+
+  
+
 
   
 
@@ -41,23 +43,13 @@ const Project = () => {
 
   const [form]=Form.useForm()
 
- // useEffect(()=>{
-   // const bugTotal=currentProject.bugReport.length
-    //console.length("bugTotal=>",bugTotal)
 
-   
-
-   
-    
-  //})
-
- 
   const addBug=()=>{setOpenAddBug(true)}
   const onClose=()=>{setOpenAddBug(false)}
 
   const openEdit=(values)=>{
     
-    console.log("bugEdit details=>", values)
+    
     setOpenEditBug(true)
 
     setEditBugNo(values.bugNo)
@@ -84,49 +76,16 @@ const Project = () => {
 
 
 
-
-
-   const LoadProject=(values)=>{
-
-
-    
-    setCurrentProject(JSON.parse(localStorage.getItem(values.projectName)))
-    console.log(currentProject)
-    
-    
-    
-    /*Axios.post('http://localhost:3001/api/projects',{
-      projectName:values.projectName    
-    })
-    .then((res)=>{
-      
-      setCurrentProject(res.data)
-      console.log("currentProject=>",JSON.stringify(currentProject))
-  
-    })
-    .catch((err)=>{
-      console.log('error loading project =>',err)
-    })
-    .finally(
-      
-    
-    
-    )*/
-  
-  }
-
-
   const saveBug=(values)=>{
 
 
     values.bugNo=bugNo+1
-    console.log(bugForm)
     bugForm.push(values)
     currentProject.bugReport=bugForm
-    console.log("Project=>",JSON.stringify(currentProject))
     setBugNo(bugNo+1)
     setCurrentProject(currentProject)
-    localStorage.setItem(currentProject.projectName,JSON.stringify(currentProject))
+    localStorage.setItem("project",JSON.stringify(currentProject))
+    console.log("currentProject=>",currentProject)
    
     
    }
@@ -135,14 +94,13 @@ const Project = () => {
 
     
     bugForm[values.bugNo-1]=values
-    console.log("bugForm after=>",bugForm)
     currentProject.bugReport=bugForm
     setCurrentProject(currentProject)
-    localStorage.setItem(currentProject.projectName,JSON.stringify(currentProject))
+    localStorage.setItem("project",JSON.stringify(currentProject))
 
 
     var bugTotal=currentProject.bugReport.length
-    console.log("bugTotal=>",bugTotal)
+    
    
     var i
     var fixedBugTotal=0
@@ -155,17 +113,38 @@ const Project = () => {
 
     }
 
-    console.log("fixedBugTotal=>",fixedBugTotal)
+    
     setCurrentProgress(fixedBugTotal/bugTotal*100)
-    console.log("currentProgress=>",currentProgress)
+    
+    
+  
     
 
    }
 
 
+ const showCurrentProject=()=>{
+
+    
+    console.log("savedAll as=>",localStorage.getItem("project"))
+
+    Axios.post("http://localhost:3001/api/updateproject",{
+      updateProject:currentProject
+    })
+    .then((res)=>(
+      console.log(res)
+    ))
+    .catch((err)=>{
+      console.log(err)
+    })
+    
+
+ }
 
 
-
+ useEffect(()=>{
+  setCurrentProject(JSON.parse(localStorage.getItem('project')))
+ })
 
 
    const columns = [
@@ -235,59 +214,13 @@ const Project = () => {
   <>
 
   <div  style={{marginTop:10, display:'flex'}}>
-
-<Form
-    layout={'inline'}
-    name="basic"
-    labelCol={{
-      span: 8,
-    }}
-    wrapperCol={{
-      span: 16,
-    }}
-    style={{
-      maxWidth: 600,
-    }}
-    initialValues={{
-      remember: true,
-    }}
-    onFinish={LoadProject}
-    
-    autoComplete="off"
-  >
-
-<Form.Item
-style={{width:300}}
-      label="Project Name : "
-      name="projectName"
-      rules={[
-        {
-          required: true,
-          message: 'Please input the project name to open!',
-        },
-      ]}
-    >
-      <Input />
-    </Form.Item>
-
-    <Form.Item
-      wrapperCol={{
-        offset: 8,
-        span: 16,
-      }}
-    >
-      <Button type="primary" htmlType="submit" style={{marginLeft:0}}>
-        Load Project
-      </Button>
-    </Form.Item>
-
-    </Form>
+ 
 
     <Form.Item
     style={{marginLeft:50}}>
 
       <Button onClick={addBug}>Add Bug +</Button>
-      <Drawer title="Add New Bug" placement="right" onClose={onClose} open={openAddBug}>
+      <Drawer title="Add New Bug" placement="left" onClose={onClose} open={openAddBug}>
 
         <Form onFinish={saveBug}>
          <Form.Item
@@ -537,6 +470,17 @@ style={{width:300}}
               </Form>
       
             </Drawer>
+
+            <Form.Item
+      wrapperCol={{
+        offset: 8,
+        span: 16,
+      }}
+    >
+      <Button type="primary" htmlType="submit" style={{marginLeft:0}} onClick={showCurrentProject}>
+        Save All
+      </Button>
+    </Form.Item>
       
       </Form>
       
@@ -558,6 +502,7 @@ style={{width:300}}
     dataSource={currentProject.bugReport} 
     pagination={false} 
     style={{marginTop:10}} 
+    
     
    />
    

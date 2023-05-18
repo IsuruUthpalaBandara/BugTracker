@@ -7,30 +7,32 @@ import Login from './components/Login'
 import Signin from './components/Signin'
 import Profile from './components/Profile'
 import Logged from './components/Logged';
+import OpenProject from './components/OpenProject';
 
 function App() {
   return (
     
-    
-   
-    
-    
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home/>}>   
+        <Route path="/" element={<Home/>}>  
+        <Route index element={<Signin/>}/>
           <Route path="login" element={<Login/>}/>
           <Route path='logged' element={<Logged/>}/>
-          <Route path="project" element={<Project/>}/>
-          <Route path="createproject" element={<CreateProjectForm/>}/>
-          <Route path="signin" element={<Signin/>}/>
+          
+           <Route path="createproject" element={<CreateProjectForm/>}/>
+
+             <Route path="openproject" element={<OpenProject/>}/>
+
+
+             <Route path="project" element={<Project/>}/> 
+            
+
+           <Route path="signin" element={<Signin/>}/> 
           <Route path="profile" element={<Profile/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
-    
-    
-    
- 
+     
 
   );
 }
