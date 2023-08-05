@@ -1,4 +1,4 @@
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Checkbox, Form, Input } from 'antd';
 import Axios from 'axios'
 
@@ -19,12 +19,12 @@ const Login = () => {
       userPassword:values.userPassword
     }).then((res)=>{
       console.log('login res=>',res)
-      navigate('../openproject')
-      alert('now you can start bug tracking work')
+      navigate('profile')
+      console.log('Login Success!')
     })
     .catch((err)=>{
       console.log('login err=>',err)
-      alert("Login failed!")
+      console.log("Login failed!")
     })
 
     
@@ -47,7 +47,7 @@ const Login = () => {
       span: 16,
     }}
     style={{
-      maxWidth: 600,
+      maxWidth: 600
     }}
     initialValues={{
       remember: true,

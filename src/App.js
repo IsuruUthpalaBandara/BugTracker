@@ -8,27 +8,24 @@ import Signin from './components/Signin'
 import Profile from './components/Profile'
 import Logged from './components/Logged';
 import OpenProject from './components/OpenProject';
+import Landing from './components/Landing'
+
 
 function App() {
   return (
     
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home/>}>  
-        <Route index element={<Signin/>}/>
-          <Route path="login" element={<Login/>}/>
-          <Route path='logged' element={<Logged/>}/>
+        
+        <Route path="/" element={<Landing/>}> 
           
-           <Route path="createproject" element={<CreateProjectForm/>}/>
-
-             <Route path="openproject" element={<OpenProject/>}/>
-
-
-             <Route path="project" element={<Project/>}/> 
-            
-
-           <Route path="signin" element={<Signin/>}/> 
+          <Route index="home" element={<Home/>}/>
+          <Route path="home" element ={<Home/>}/>
+           
           <Route path="profile" element={<Profile/>}/>
+      
+
+          
         </Route>
       </Routes>
     </BrowserRouter>

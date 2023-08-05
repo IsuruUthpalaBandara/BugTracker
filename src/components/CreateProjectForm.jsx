@@ -21,6 +21,7 @@ export default function CreateProjectForm() {
     }).then((res)=>{
       console.log("project creation response=>",res)
       console.log("project created!!!")
+      
     }).catch((err)=>{
       console.log("project creation error=>",err)
     })
@@ -83,7 +84,7 @@ export default function CreateProjectForm() {
     </Form.Item>
 
     <Form.Item
-      label="Project Password :"
+      label="Set Password :"
       name="projectPassword"
       rules={[
         {
