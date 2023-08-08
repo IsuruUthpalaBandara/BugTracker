@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Layout, Space, Button,List , Drawer, Card, Col, Row} from 'antd';
-import logo from "./images/bug (2).png"
+import logo from "./images/bug.png"
 import Login from './Login';
 import Signin from './Signin'
 import { Outlet, useNavigate } from 'react-router-dom';
@@ -106,6 +106,10 @@ return (
       <Layout hasSider>
         
         <Sider style={siderStyle}>
+
+          <div>
+          <img src={logo} style={{width:70}} alt="dfbdb"/>
+          </div>
           <List>
             
               <Button ghost style={btnStyle}  onClick={openLoginForm}>Login</Button>
@@ -141,9 +145,20 @@ return (
         </Sider>
 
         <Content style={contentStyle}>
+        
+              
+
+          
+
+
+            
+            <img src={matrix} style={{width:540}} alt="dfbdb"/>
+
+
+         
  
 
-      <img src={matrix} style={{width:540}} alt="dfbdb"/>
+      
   
         </Content>
 
