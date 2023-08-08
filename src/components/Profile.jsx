@@ -16,8 +16,8 @@ const headerStyle = {
 };
 const contentStyle = {
   textAlign: 'center',
-  minHeight: 587,
-  lineHeight: '120px',
+  
+  lineHeight: '12px',
   color: '#fff',
   backgroundColor: '#D6E7BB',
 };
@@ -26,6 +26,7 @@ const siderStyle = {
   lineHeight: '120px',
   color: '#fff',
   backgroundColor: '#122C2F',
+  minHeight: 500,
 };
 const footerStyle = {
   textAlign: 'center',

@@ -9,6 +9,7 @@ import Profile from './components/Profile'
 import Logged from './components/Logged';
 import OpenProject from './components/OpenProject';
 import Landing from './components/Landing'
+import Demo from './components/Demo';
 
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
            
           <Route path="profile" element={<Profile/>}/>
           <Route path ="project" element={<Project/>}/>
+          <Route path ="demo" element={<Demo/>}/>
+      
       
 
           

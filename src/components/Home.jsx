@@ -1,28 +1,30 @@
 import React from 'react';
 import { useState } from 'react';
-import { Layout, Space, Button,List , Drawer} from 'antd';
-import bug from "./images/bug.png"
+import { Layout, Space, Button,List , Drawer, Card, Col, Row} from 'antd';
+import logo from "./images/bug (2).png"
 import Login from './Login';
 import Signin from './Signin'
-import { Outlet } from 'react-router-dom';
-
+import { Outlet, useNavigate } from 'react-router-dom';
+import matrix from './images/matrix.gif'
+import './Home.css'
 
 const c="#CCC65B";
 
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Sider, Content } = Layout;
 const headerStyle = {
   textAlign: 'left',
-  color: c,
-  fontSize:'40px',
+  color: 'white',
+  fontSize:'25px',
   height: 100,
   paddingInline: 50,
   padding:20,
+  paddingLeft:35,
   lineHeight: '64px',
   backgroundColor: 'black',
 };
 const contentStyle = {
-  textAlign: 'center',
+  textAlign: 'right',
   minHeight: 490,
   lineHeight: '120px',
   color: '#fff',
@@ -30,21 +32,18 @@ const contentStyle = {
 };
 const siderStyle = {
   textAlign: 'center',
-  lineHeight: '120px',
+  lineHeight: '12px',
   color: '#fff',
   backgroundColor: 'black',
 };
-const footerStyle = {
-  textAlign: 'center',
-  color: c,
-  backgroundColor: 'black',
-  lineHeight:'10px',
-  minHeight:20
-};
+
+
 const btnStyle={
   width:120,
-  color:c,
-  fontSize:20
+  color:'violet',
+  fontSize:15,
+  textAlign:'center',
+  marginTop:30
   
 
   
@@ -55,6 +54,8 @@ const btnStyle={
 
 
 const Home = () => {
+
+  const navigate = useNavigate()
 
   const [login,setLogin]=useState(false);
   const [signIn,setSignIn]=useState(false);
@@ -75,6 +76,16 @@ const Home = () => {
     setSignIn(false)
   }
 
+  const openDemo=()=>{
+
+    const demo ={}
+    demo.projectName="Demo Project"
+
+    localStorage.setItem("demo",JSON.stringify(demo))
+    navigate('demo')
+
+  }
+
 return (
   <Space
     direction="vertical"
@@ -93,25 +104,24 @@ return (
         
         <b>Bug Tracker</b></Header>
       <Layout hasSider>
-        <Content style={contentStyle}>
-
-      
-
-
-
-
-        </Content>
+        
         <Sider style={siderStyle}>
-          <List style={{textAlign:'center', paddingLeft:'20px'}} split={false}>
-            <List.Item>
-              <Button style={btnStyle} type="link" onClick={openLoginForm} >Login</Button>
-             </List.Item>
-            <List.Item>
-                <Button  style={btnStyle} type="link" onClick={openSignInForm}>Sign In</Button>
-            </List.Item>
+          <List>
+            
+              <Button ghost style={btnStyle}  onClick={openLoginForm}>Login</Button>
+          
+                <Button ghost style={btnStyle}  onClick={openSignInForm}>Sign In</Button>
+          
+                <Button ghost style={btnStyle} onClick={openDemo} >Demo</Button>
+
+                <Button ghost style={btnStyle}  >About</Button>
+          
+     
+
+
         </List>
         <>
-              <Drawer title="" placement="right" onClose={onCloseLogin} open={login} style={{backgroundColor:'#C3BC2B' }}>
+              <Drawer title="" placement="right" onClose={onCloseLogin} open={login} style={{backgroundColor:'white' }}>
 
                   <Login/>
 
@@ -119,7 +129,7 @@ return (
               </Drawer>
         </>
         <>
-              <Drawer title="" placement="right" onClose={onCloseSignIn} open={signIn} style={{backgroundColor:'#8AA881'}}>
+              <Drawer title="" placement="right" onClose={onCloseSignIn} open={signIn} style={{backgroundColor:'white'}}>
 
                   <Signin/>
 
@@ -129,8 +139,22 @@ return (
           
 
         </Sider>
+
+        <Content style={contentStyle}>
+ 
+
+      <img src={matrix} style={{width:540}} alt="dfbdb"/>
+  
+        </Content>
+
+
+
+
+
+
+
       </Layout>
-      <Footer style={footerStyle}>Created by Isuru Uthpala Bandara 2023</Footer>
+      
     </Layout>
     
     

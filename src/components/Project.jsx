@@ -36,7 +36,7 @@ const siderStyle = {
   lineHeight: '100px',
   color: '#fff',
   backgroundColor: '#001C0E',
-  minHeight:640,
+  minHeight:550,
   
 };
 const footerStyle = {
@@ -122,6 +122,23 @@ const Project = () => {
     localStorage.setItem("project",JSON.stringify(currentProject))
     console.log("currentProject=>",currentProject)
    
+
+    var bugTotal=currentProject.bugReport.length
+    
+   
+    var i
+    var fixedBugTotal=0
+
+    for(i=0;i<bugTotal;i++){
+      if(currentProject.bugReport[i].Status==="Fixed"){
+        fixedBugTotal++
+        
+      }
+
+    }
+
+    
+    setCurrentProgress(fixedBugTotal/bugTotal*100)
     
    }
 
