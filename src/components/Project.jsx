@@ -6,13 +6,51 @@ import {  Button,
            DatePicker,  
            Radio, 
            Typography,
-           Progress
+           Progress,
+           Layout,
+           Space,
+           List,
+           Card
               } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import Axios from 'axios'
 import React,{ useEffect, useState} from 'react'
+const { Header, Footer, Sider, Content } = Layout;
+const headerStyle = {
+  textAlign: 'center',
+  color: '#fff',
+  height: 50,
+  paddingInline: 0,
+  lineHeight: '6px',
+  backgroundColor: 'black',
+};
+const contentStyle = {
+  textAlign: 'center',
+  minHeight: 120,
+  lineHeight: '120px',
+  color: '#fff',
+  backgroundColor: '#CBE095',
+};
+const siderStyle = {
+  textAlign: 'center',
+  lineHeight: '100px',
+  color: '#fff',
+  backgroundColor: '#001C0E',
+  minHeight:640,
+  
+};
+const footerStyle = {
+  textAlign: 'center',
+  color: '#fff',
+  backgroundColor: '#96888C',
+};
+const projectBtnStyle={
+  color:'white',
+  textAlign:'center',
+  marginTop:40
 
-
+ 
+}
 
 
 
@@ -22,10 +60,7 @@ const {Text}=Typography
 
 const Project = () => {
 
-  
 
-
-  
 
   const [currentProject,setCurrentProject]=useState({})
   const [openAddBug,setOpenAddBug]=useState(false)
@@ -213,298 +248,376 @@ const Project = () => {
  return(
   <>
 
-  <div  style={{marginTop:10, display:'flex'}}>
+<Space
+    direction="vertical"
+    style={{
+      width: '100%',
+    }}
+    size={[0, 48]}
+  >
+
+
+    <Layout>
+      <Sider style={siderStyle}>
+        
+        
+        
+        
+        
+        
+<List>
+
+  <div style={{color:'white', marginLeft:0, marginBottom:60,fontSize:20,marginTop:20}}>Bug Tracker</div>
+
+      <div><Button style ={projectBtnStyle} ghost onClick={addBug}>Add Bug +</Button></div>
+
  
 
-    <Form.Item
-    style={{marginLeft:50}}>
+  <div><Button ghost htmlType="submit" style={projectBtnStyle} onClick={showCurrentProject}>Save All</Button></div>
+      
+    
+  
 
-      <Button onClick={addBug}>Add Bug +</Button>
-      <Drawer title="Add New Bug" placement="left" onClose={onClose} open={openAddBug}>
-
-        <Form onFinish={saveBug}>
-         <Form.Item
-          style={{width:300}}
-          label="Bug Name : "
-          name="bugName"
-          rules={[
-            {
-              required: true,
-              message: 'Enter bug name',
-            },
-                ]}
-                    >
-          <Input />
-          
-
-          </Form.Item>
-
-          <Form.Item
-          style={{width:300}}
-          label="Description : "
-          name="Description"
-          rules={[
-            {
-              required: false,
-              message: 'Bug Description Here',
-            },
-                ]}
-                    >
-          <TextArea rows={4} />
-          
-
-          </Form.Item>
-
-          <Form.Item
-          
-                    label="Status: "
-                    name="Status"
-                   
-                    
-                    
-                    >
-                      <Radio.Group >
-                        <Radio value="Fixed">Fixed</Radio>
-                        <Radio value="Not Fixed">Not Fixed</Radio>
-                      </Radio.Group>
-
-       
-          </Form.Item>
-
-          <Form.Item
-          style={{width:300}}
-          label="Start Time: "
-          name="startTime"
-
-          >
-            <DatePicker picker='date' />
-
-          </Form.Item>
-
-                    <Form.Item
-          style={{width:300}}
-          label="Finish Time: "
-          name="finishTime"
-
-          >
-            <DatePicker picker='date'/>
-
-          </Form.Item>
-
-          <Form.Item
-          style={{width:300}}
-          label="Fixing Method : "
-          name="fixingMethod"
-          
-          rules={[
-            {
-              required: false,
-              message: 'Add how to fix this',
-            },
-                ]}
-                    >
-          <TextArea rows={4} />
-          
-
-          </Form.Item>
-
-          <Form.Item
-            label="Responsibility : "
-           name="Responsibility"
-            >
-             <Input/>
-
-             </Form.Item>
-
-             <Form.Item>
-              <Button htmlType="submit">Save</Button>
-             </Form.Item>
+ 
 
 
-        </Form>
 
-      </Drawer>
+  
+    
+  <Card size="large" title="Progress"  style={{ width: 180 ,backgroundColor:'#EFE8B9', marginTop:60, marginLeft:10}}>
+  <Progress type="circle" percent={currentProgress} style={{marginTop:0, color:'white'}} trailColor='red' />
+    </Card>
+    
 
-    </Form.Item>
+
+
+
+ 
+
+
+</List>
+
 
    
-<Form.Item style={{width:300, marginLeft:30}}>
-<Progress  percent={currentProgress} />
-</Form.Item>
-     
+
+   
+   <Form.Item>
+   <Drawer title="Add New Bug" placement="left" onClose={onClose} open={openAddBug}>
+
+     <Form onFinish={saveBug}>
+      <Form.Item
+       style={{width:300}}
+       label="Bug Name : "
+       name="bugName"
+       rules={[
+         {
+           required: true,
+           message: 'Enter bug name',
+         },
+             ]}
+                 >
+       <Input />
        
 
-     
+       </Form.Item>
 
-
-    <div>
-
+       <Form.Item
+       style={{width:300}}
+       label="Description : "
+       name="Description"
+       rules={[
+         {
+           required: false,
+           message: 'Bug Description Here',
+         },
+             ]}
+                 >
+       <TextArea rows={4} />
        
-          
+
+       </Form.Item>
+
+       <Form.Item
+       
+                 label="Status: "
+                 name="Status"
+                
+                 
+                 
+                 >
+                   <Radio.Group >
+                     <Radio value="Fixed">Fixed</Radio>
+                     <Radio value="Not Fixed">Not Fixed</Radio>
+                   </Radio.Group>
+
+    
+       </Form.Item>
+
+       <Form.Item
+       style={{width:300}}
+       label="Start Time: "
+       name="startTime"
+
+       >
+         <DatePicker picker='date' />
+
+       </Form.Item>
+
+                 <Form.Item
+       style={{width:300}}
+       label="Finish Time: "
+       name="finishTime"
+
+       >
+         <DatePicker picker='date'/>
+
+       </Form.Item>
+
+       <Form.Item
+       style={{width:300}}
+       label="Fixing Method : "
+       name="fixingMethod"
+       
+       rules={[
+         {
+           required: false,
+           message: 'Add how to fix this',
+         },
+             ]}
+                 >
+       <TextArea rows={4} />
+       
+
+       </Form.Item>
+
+       <Form.Item
+         label="Responsibility : "
+        name="Responsibility"
+         >
+          <Input/>
+
+          </Form.Item>
+
+          <Form.Item>
+           <Button htmlType="submit">Save</Button>
+          </Form.Item>
+
+
+     </Form>
+
+   </Drawer>
+
+ </Form.Item>
         
-            <Form>
-            <Drawer title="Edit Bug" placement="right" onClose={onCloseEditBug} open={openEditBug}>
-      
-              <Form onFinish={editBug} form={form}>
-
-                
-                <Form.Item
-                
-                style={{width:300}}
-                label="Bug No:"
-                name="bugNo"
-                rules={[
-                  {
-                    required: false,
-                    message: 'Enter bug No',
-                  },
-                      ]}
-                          >
-
-
-               <Text>{editBugNo}</Text>
-                
-      
-                </Form.Item>
-
-                
-
-               <Form.Item
-                style={{width:300}}
-                label="Bug Name : "
-                name="bugName"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Enter bug name',
-                  },
-                      ]}
-                          >
-                <Input />
-                
-      
-                </Form.Item>
-      
-                <Form.Item
-                style={{width:300}}
-                label="Description : "
-                name="Description"
-                rules={[
-                  {
-                    required: false,
-                    message: 'Bug Description Here',
-                  },
-                      ]}
-                          >
-                <TextArea rows={4} />
-                
-      
-                </Form.Item>
-      
-                <Form.Item
-                
-                          label="Status: "
-                          name="Status"
-                         
-                          
-                          
-                          >
-                            <Radio.Group >
-                              <Radio value="Fixed">Fixed</Radio>
-                              <Radio value="Not Fixed">Not Fixed</Radio>
-                            </Radio.Group>
-      
-             
-                </Form.Item>
-      
-                <Form.Item
-                style={{width:300}}
-                label="Start Time: "
-                name="startTime"
-      
-                >
-                  <DatePicker picker='date' />
-      
-                </Form.Item>
-      
-                          <Form.Item
-                style={{width:300}}
-                label="Finish Time: "
-                name="finishTime"
-      
-                >
-                  <DatePicker picker='date'/>
-      
-                </Form.Item>
-      
-                <Form.Item
-                style={{width:300}}
-                label="Fixing Method : "
-                name="fixingMethod"
-                
-                rules={[
-                  {
-                    required: false,
-                    message: 'Add how to fix this',
-                  },
-                      ]}
-                          >
-                <TextArea rows={4} />
-                
-      
-                </Form.Item>
-      
-                <Form.Item
-                  label="Responsibility : "
-                 name="Responsibility"
-                  >
-                   <Input/>
-      
-                   </Form.Item>
-      
-                   <Form.Item>
-                    <Button htmlType="submit">Save</Button>
-                   </Form.Item>
-      
-      
-              </Form>
-      
-            </Drawer>
-
-            <Form.Item
-      wrapperCol={{
-        offset: 8,
-        span: 16,
-      }}
-    >
-      <Button type="primary" htmlType="submit" style={{marginLeft:0}} onClick={showCurrentProject}>
-        Save All
-      </Button>
-    </Form.Item>
-      
-      </Form>
-      
-         
         
+        
+        </Sider>
+      <Layout>
+        <Header style={headerStyle}>
+          <div style={{marginTop:"10px"}}><h4>Project Name : {currentProject.projectName}</h4>
+          </div></Header>
+        <Content style={contentStyle}>
+            
+        <div  style={{marginTop:10, display:'flex'}}>
  
-     </div>
+
+ 
 
 
-    </div>
 
-
-    <div style={{marginTop:"10px"}}><h4>Currently Loaded : {currentProject.projectName}</h4></div>
+  
+    
 
   
 
-    <Table 
-    columns={columns} 
-    dataSource={currentProject.bugReport} 
-    pagination={false} 
-    style={{marginTop:10}} 
+
+ <div>
+
     
-    
-   />
+       
+     
+         <Form>
+         <Drawer title="Edit Bug" placement="right" onClose={onCloseEditBug} open={openEditBug}>
+   
+           <Form onFinish={editBug} form={form}>
+
+             
+             <Form.Item
+             
+             style={{width:300}}
+             label="Bug No:"
+             name="bugNo"
+             rules={[
+               {
+                 required: false,
+                 message: 'Enter bug No',
+               },
+                   ]}
+                       >
+
+
+            <Text>{editBugNo}</Text>
+             
+   
+             </Form.Item>
+
+             
+
+            <Form.Item
+             style={{width:300}}
+             label="Bug Name : "
+             name="bugName"
+             rules={[
+               {
+                 required: true,
+                 message: 'Enter bug name',
+               },
+                   ]}
+                       >
+             <Input />
+             
+   
+             </Form.Item>
+   
+             <Form.Item
+             style={{width:300}}
+             label="Description : "
+             name="Description"
+             rules={[
+               {
+                 required: false,
+                 message: 'Bug Description Here',
+               },
+                   ]}
+                       >
+             <TextArea rows={4} />
+             
+   
+             </Form.Item>
+   
+             <Form.Item
+             
+                       label="Status: "
+                       name="Status"
+                      
+                       
+                       
+                       >
+                         <Radio.Group >
+                           <Radio value="Fixed">Fixed</Radio>
+                           <Radio value="Not Fixed">Not Fixed</Radio>
+                         </Radio.Group>
+   
+          
+             </Form.Item>
+   
+             <Form.Item
+             style={{width:300}}
+             label="Start Time: "
+             name="startTime"
+   
+             >
+               <DatePicker picker='date' />
+   
+             </Form.Item>
+   
+                       <Form.Item
+             style={{width:300}}
+             label="Finish Time: "
+             name="finishTime"
+   
+             >
+               <DatePicker picker='date'/>
+   
+             </Form.Item>
+   
+             <Form.Item
+             style={{width:300}}
+             label="Fixing Method : "
+             name="fixingMethod"
+             
+             rules={[
+               {
+                 required: false,
+                 message: 'Add how to fix this',
+               },
+                   ]}
+                       >
+             <TextArea rows={4} />
+             
+   
+             </Form.Item>
+   
+             <Form.Item
+               label="Responsibility : "
+              name="Responsibility"
+               >
+                <Input/>
+   
+                </Form.Item>
+   
+                <Form.Item>
+                 <Button htmlType="submit">Save</Button>
+                </Form.Item>
+   
+   
+           </Form>
+   
+         </Drawer>
+
+
+   
+   </Form>
+   
+      
+     
+
+  </div>
+
+
+ </div>
+
+
+ 
+
+
+
+ <Table 
+ columns={columns} 
+ dataSource={currentProject.bugReport} 
+ pagination={false} 
+ style={{marginTop:10}} 
+ 
+ 
+/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </Content>
+
+      </Layout>
+    </Layout>
+  </Space>
+
+
+
+
+
+
+
+
+
+
    
 
     </>

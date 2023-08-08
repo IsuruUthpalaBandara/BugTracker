@@ -1,7 +1,9 @@
 import React ,{useState} from 'react';
-import { Layout, Space ,List, Button, Drawer} from 'antd';
+import {useNavigate} from 'react-router-dom'
+import { Layout, Space ,Button, Drawer, List, Table} from 'antd';
 import ProjectList from './ProjectList'
 import CreateProjectForm from './CreateProjectForm';
+import Axios from 'axios'
 
 const { Header, Sider, Content } = Layout;
 const headerStyle = {
@@ -10,7 +12,7 @@ const headerStyle = {
   height: 64,
   paddingInline: 50,
   lineHeight: '64px',
-  backgroundColor: '#780000',
+  backgroundColor: 'black',
 };
 const contentStyle = {
   textAlign: 'center',
@@ -23,7 +25,7 @@ const siderStyle = {
   textAlign: 'center',
   lineHeight: '120px',
   color: '#fff',
-  backgroundColor: '#001F3C',
+  backgroundColor: '#122C2F',
 };
 const footerStyle = {
   textAlign: 'center',
@@ -36,9 +38,12 @@ const profileBtnStyle={
   color:'white',
   textAlign:'center',
   marginLeft:20,
+  marginTop:30,
+
 }
 const Profile = () => {
 
+const navigate = useNavigate()
   
 const [createProjectOnOff,setCreateProjectOnOff]=useState(false)
 
@@ -55,6 +60,103 @@ const closeCreateProject=()=>{
 
 
 
+  const openProject=(values)=>{
+
+    
+
+    
+    Axios.post("http://localhost:3001/api/loadproject",{
+          projectName:values.projectName
+        }).then((res)=>{
+          const project=res.data[0]
+          console.log("openProject=>",project)
+
+          if(project.bugReport==null){
+              project.bugReport=[]
+          }
+          else{
+              project.bugReport=JSON.parse(project.bugReport)
+          }
+          
+          
+          //console.log("openProject=>",JSON.stringify(project))
+          console.log("openProject=>",project)
+        localStorage.setItem("project",JSON.stringify(project))
+         navigate('../project')
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
+
+        
+    
+  
+}
+
+
+const columns = [
+  {
+    title: 'Project Name',
+    dataIndex: 'projectName',
+    key: 'projectName',
+    render: (text,record) =>{
+      return(
+
+        <Button onClick={(e)=>openProject(record)}> {text} </Button>
+
+    )} ,
+  },
+
+  {
+    title: 'Author',
+    dataIndex: 'projectCreator',
+    key: 'projectCreator',
+  }
+
+
+];
+
+
+
+  let projectList=[]
+  
+
+
+
+  const Refresh=()=>{
+
+
+    Axios.get("http://localhost:3001/api/projectlist")
+    .then((res)=>{
+      console.log("project List=>",res.data)
+
+      for(let i=0;i<res.data.length;i++){
+        projectList[i]=res.data[i]
+      }
+
+      localStorage.setItem("projectList",JSON.stringify(projectList))
+      
+      
+    })
+    .catch((err)=>{
+      console.log("Error projectList=>",err)
+    })
+
+
+    console.log(JSON.parse(localStorage.getItem("projectList")))
+
+ 
+
+  
+
+
+  }
+
+
+  
+
+
+
   return(
   <Space
     direction="vertical"
@@ -68,19 +170,20 @@ const closeCreateProject=()=>{
     <Layout>
       <Sider style={siderStyle}>
 
-        <div style={{color:'#00B600'}}>Bug Tracker</div>
+        <div style={{color:'White', fontSize:20}}>Bug Tracker</div>
 
 
         
         
         <List>
-          <List.Item>
-            <Button type='Link' style={profileBtnStyle} onClick={openCreateProject}>Create New Project</Button>
-          </List.Item>
+       
+            <Button ghost style={profileBtnStyle} onClick={openCreateProject}>Create New Project</Button>
+        
 
-          <List.Item>
-            <Button type='Link' style={profileBtnStyle} >Project Team</Button>
-          </List.Item>
+        
+            <Button ghost style={profileBtnStyle} >Project Team</Button>
+            <Button ghost style={profileBtnStyle} onClick={Refresh}>Refresh</Button>
+         
 
         </List>
 
@@ -100,7 +203,7 @@ const closeCreateProject=()=>{
         <Header style={headerStyle}>My Projects</Header>
         <Content style={contentStyle}>
 
-          <ProjectList/>
+        <Table columns={columns} dataSource={JSON.parse(localStorage.getItem("projectList"))} />
 
         </Content>
         

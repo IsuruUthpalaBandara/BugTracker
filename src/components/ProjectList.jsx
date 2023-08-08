@@ -126,9 +126,10 @@ const columns = [
 
     <>
     
-    <Button onClick={Refresh}>Refresh</Button>
+    
 
     <Table columns={columns} dataSource={JSON.parse(localStorage.getItem("projectList"))} />
+    <Button onClick={Refresh}>Refresh</Button>
     
     </>
 
