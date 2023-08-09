@@ -84,6 +84,10 @@ const Home = () => {
 
   }
 
+  const openAbout=()=>{
+    navigate('about')
+  }
+
 return (
   <Space
     direction="vertical"
@@ -116,7 +120,7 @@ return (
           
                 <Button ghost style={btnStyle} onClick={openDemo} >Demo</Button>
 
-                <Button ghost style={btnStyle}  >About</Button>
+                <Button ghost style={btnStyle} onClick={openAbout}  >About</Button>
           
      
 
@@ -151,12 +155,7 @@ return (
             </Col>
             <Col span={8}>
               
-            <div class="des">
-              This application aids you to record and monitor the bugs in your coding project.
-              You can record the details of a bugs you find, save the current status of it and set deadlines.
-              Start checking this application by pressing the "Demo" button.
-              If you want to save your work and continue, you have to click "Sign In" and create an account.
-              If you already have an account, please press "Login"</div>
+
               
          
             </Col >
@@ -201,3 +200,16 @@ return (
   </Space>
 )};
 export default Home
+
+
+/*
+
+            <div class="des">
+              This application aids you to record and monitor the bugs in your coding project.
+              You can record the details of a bugs you find, save the current status of it and set deadlines.
+              Start checking this application by pressing the "Demo" button.
+              If you want to save your work and continue, you have to click "Sign In" and create an account.
+              If you already have an account, please press "Login"</div>
+
+
+*/

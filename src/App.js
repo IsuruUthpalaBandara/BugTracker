@@ -10,6 +10,7 @@ import Logged from './components/Logged';
 import OpenProject from './components/OpenProject';
 import Landing from './components/Landing'
 import Demo from './components/Demo';
+import About from './components/About';
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
           <Route path="profile" element={<Profile/>}/>
           <Route path ="project" element={<Project/>}/>
           <Route path ="demo" element={<Demo/>}/>
-      
+          <Route path="about" element={<About/>}/>      
       
 
           
