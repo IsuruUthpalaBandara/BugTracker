@@ -24,10 +24,8 @@ const headerStyle = {
   backgroundColor: 'black',
 };
 const contentStyle = {
-  textAlign: 'right',
   minHeight: 490,
-  lineHeight: '120px',
-  color: '#fff',
+  lineHeight: '30px',
   backgroundColor: 'black',
 };
 const siderStyle = {
@@ -40,7 +38,7 @@ const siderStyle = {
 
 const btnStyle={
   width:120,
-  color:'violet',
+  color:'#00FF00',
   fontSize:15,
   textAlign:'center',
   marginTop:30
@@ -102,7 +100,7 @@ return (
         
         </div>
         
-        <b>Bug Tracker</b></Header>
+        <b class="shortDes">Bug Tracker</b></Header>
       <Layout hasSider>
         
         <Sider style={siderStyle}>
@@ -144,7 +142,34 @@ return (
 
         </Sider>
 
+
         <Content style={contentStyle}>
+
+          <Row>
+            <Col> span={4}
+
+            </Col>
+            <Col span={8}>
+              
+            <div class="des">
+              This application aids you to record and monitor the bugs in your coding project.
+              You can record the details of a bugs you find, save the current status of it and set deadlines.
+              Start checking this application by pressing the "Demo" button.
+              If you want to save your work and continue, you have to click "Sign In" and create an account.
+              If you already have an account, please press "Login"</div>
+              
+         
+            </Col >
+
+            <Col span={12}>
+
+            <img src={matrix} style={{width:600, textAlign:'right',marginLeft:40}} alt="dfbdb"/>
+            
+            </Col>
+          </Row>
+
+
+     
         
               
 
@@ -152,7 +177,7 @@ return (
 
 
             
-            <img src={matrix} style={{width:540}} alt="dfbdb"/>
+           
 
 
          
